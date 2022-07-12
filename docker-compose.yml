@@ -1,4 +1,4 @@
-version: "2.6" # docker-compose 的版本，可以使用 docker-compose -v 命令在终端查看
+version: "0.1" # docker-compose 的版本，可以使用 docker-compose -v 命令在终端查看
 services:
   ubuntu:
     image: anibali/pytorch:1.8.1-cuda11.1 # image 的名称
