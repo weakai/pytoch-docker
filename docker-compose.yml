@@ -1,0 +1,30 @@
+version: "2.6" # docker-compose 的版本，可以使用 docker-compose -v 命令在终端查看
+services:
+  ubuntu:
+    image: anibali/pytorch:1.8.1-cuda11.1 # image 的名称
+    container_name: ubuntu_zc # 创建 container 的名称
+    ports:
+      - "0.0.0.0:1122:22" # 将 container 里面的22端口映射到宿主机的1122端口 
+    command:
+      - "bash"
+    restart: always
+    volumes:
+      - "/home/tanshui/Desktop/zc/ubuntu_zc/ubuntu:/app" # 将宿主机的 /home/tanshui/Desktop/zc/ubuntu_zc/ubuntu 映射到 container 中的 /app
+    privileged: true
+    stdin_open: true
+    tty: true
+    user: root # container 里的用户
+
+    # 使用宿主机的显卡
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1 # 宿主机的显卡数量
+              capabilities: [gpu]
+
+# https://github.com/jefferywork/docker-vhost
+# https://hub.docker.com/layers/pytorch/pytorch/pytorch/latest/images/sha256-1ef1f61b13738de8086ae7e1ce57c89f154e075dae0b165f7590b9405efeb6fe?context=explore
+# https://github.com/anibali/docker-pytorch
+# https://docs.docker.com/compose/gpu-support/
